@@ -1,0 +1,37 @@
+{
+  "framework": "tensorflow",
+  "model_type": "cnn",
+  "device": "CPU",
+  "device_info": {
+    "cpu_name": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_cores": 20,
+    "ram_gb": 23.71,
+    "gpu_available": false,
+    "gpu_name": null,
+    "gpu_memory_gb": null
+  },
+  "num_parameters": 620810,
+  "epochs": 3,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "training_time_ms": 36710.2638000506,
+  "eval_time_ms": 759.938900009729,
+  "history": {
+    "train_loss": [
+      2.126570701599121,
+      1.7132375240325928,
+      1.5664104223251343
+    ],
+    "train_accuracy": [
+      0.2678,
+      0.3646,
+      0.4126
+    ]
+  },
+  "test_metrics": {
+    "loss": 3.1124396324157715,
+    "accuracy": 0.124,
+    "f1_score": 0.03207167941727028,
+    "auc_roc": 0.7783937839630811
+  }
+}

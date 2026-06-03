@@ -141,6 +141,7 @@ def train_pytorch_model(
     learning_rate=0.001,
     data_dir="./data",
     save_dir="./results",
+    subset_fraction=1.0,
 ):
     """End-to-end PyTorch training pipeline with profiling.
 
@@ -171,7 +172,7 @@ def train_pytorch_model(
 
     # --- Data ---
     train_loader, test_loader, class_names = load_cifar10_pytorch(
-        batch_size=batch_size, data_dir=data_dir
+        batch_size=batch_size, data_dir=data_dir, subset_fraction=subset_fraction
     )
 
     # --- Model ---

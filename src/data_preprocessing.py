@@ -20,7 +20,7 @@ import torchvision.transforms as transforms
 # CIFAR-10 Loaders (primary benchmark dataset)
 # ---------------------------------------------------------------------------
 
-def load_cifar10_pytorch(batch_size=64, data_dir="./data"):
+def load_cifar10_pytorch(batch_size=64, data_dir="./data", subset_fraction=1.0):
     """Download and prepare CIFAR-10 as PyTorch DataLoaders.
 
     Applies standard normalization (mean/std per channel) suitable for
@@ -29,6 +29,8 @@ def load_cifar10_pytorch(batch_size=64, data_dir="./data"):
     Args:
         batch_size (int): Mini-batch size.
         data_dir (str): Path where the dataset will be cached.
+        subset_fraction (float): Fraction of each split to keep (for quick
+            runs).  Values < 1.0 take a random reproducible subset.
 
     Returns:
         tuple: (train_loader, test_loader, class_names)
@@ -58,6 +60,20 @@ def load_cifar10_pytorch(batch_size=64, data_dir="./data"):
         root=data_dir, train=False, download=True, transform=test_transform
     )
 
+    class_names = train_dataset.classes  # capture before any Subset wrapping
+
+    # Optionally take a smaller random subset for quick experiments
+    if subset_fraction < 1.0:
+        from torch.utils.data import Subset
+        rng = np.random.default_rng(42)
+        for ds_name, ds in (("train", train_dataset), ("test", test_dataset)):
+            n_keep = max(batch_size + 1, int(len(ds) * subset_fraction))
+            indices = rng.choice(len(ds), size=n_keep, replace=False)
+            if ds_name == "train":
+                train_dataset = Subset(train_dataset, indices.tolist())
+            else:
+                test_dataset = Subset(test_dataset, indices.tolist())
+
     train_loader = DataLoader(
         train_dataset, batch_size=batch_size, shuffle=True, num_workers=2
     )
@@ -65,7 +81,6 @@ def load_cifar10_pytorch(batch_size=64, data_dir="./data"):
         test_dataset, batch_size=batch_size, shuffle=False, num_workers=2
     )
 
-    class_names = train_dataset.classes  # 10 CIFAR classes
     return train_loader, test_loader, class_names
 
 
@@ -165,7 +180,7 @@ def compute_class_distribution(labels):
 # TensorFlow Data Helpers
 # ---------------------------------------------------------------------------
 
-def load_cifar10_tensorflow(batch_size=64):
+def load_cifar10_tensorflow(batch_size=64, subset_fraction=1.0):
     """Load CIFAR-10 through TensorFlow / Keras utilities.
 
     Returns tf.data.Dataset pipelines with standard preprocessing
@@ -173,6 +188,8 @@ def load_cifar10_tensorflow(batch_size=64):
 
     Args:
         batch_size (int): Mini-batch size.
+        subset_fraction (float): Fraction of each split to keep (for quick
+            runs).  Values < 1.0 take a random reproducible subset.
 
     Returns:
         tuple: (train_ds, test_ds, class_names)
@@ -187,6 +204,16 @@ def load_cifar10_tensorflow(batch_size=64):
     X_test = X_test.astype("float32") / 255.0
     y_train = y_train.flatten()
     y_test = y_test.flatten()
+
+    # Optionally take a smaller random subset for quick experiments
+    if subset_fraction < 1.0:
+        rng = np.random.default_rng(42)
+        n_train = max(batch_size + 1, int(len(X_train) * subset_fraction))
+        n_test = max(batch_size + 1, int(len(X_test) * subset_fraction))
+        train_idx = rng.choice(len(X_train), size=n_train, replace=False)
+        test_idx = rng.choice(len(X_test), size=n_test, replace=False)
+        X_train, y_train = X_train[train_idx], y_train[train_idx]
+        X_test, y_test = X_test[test_idx], y_test[test_idx]
 
     train_ds = (
         tf.data.Dataset.from_tensor_slices((X_train, y_train))

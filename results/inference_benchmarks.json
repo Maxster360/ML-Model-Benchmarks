@@ -1,0 +1,288 @@
+{
+  "device_info": {
+    "cpu_name": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_cores": 20,
+    "ram_gb": 23.71,
+    "gpu_available": false,
+    "gpu_name": null,
+    "gpu_memory_gb": null
+  },
+  "config": {
+    "batch_sizes": [
+      1,
+      8,
+      32,
+      64,
+      128,
+      256
+    ],
+    "warmup": 10,
+    "repeats": 20
+  },
+  "benchmarks": [
+    {
+      "framework": "pytorch",
+      "model_type": "cnn",
+      "device": "cpu",
+      "batch_size": 1,
+      "mean_latency_ms": 0.5797749996418133,
+      "std_latency_ms": 0.053110741137158086,
+      "min_latency_ms": 0.5222000181674957,
+      "max_latency_ms": 0.7783999899402261,
+      "throughput_img_per_sec": 1724.8070382783026
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "cnn",
+      "device": "cpu",
+      "batch_size": 8,
+      "mean_latency_ms": 1.6489149973494932,
+      "std_latency_ms": 0.11208985186432381,
+      "min_latency_ms": 1.3786000199615955,
+      "max_latency_ms": 1.82679999852553,
+      "throughput_img_per_sec": 4851.675200273754
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "cnn",
+      "device": "cpu",
+      "batch_size": 32,
+      "mean_latency_ms": 3.8473300024634227,
+      "std_latency_ms": 0.38791975112011673,
+      "min_latency_ms": 3.5351000260561705,
+      "max_latency_ms": 5.424599978141487,
+      "throughput_img_per_sec": 8317.456516470016
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "cnn",
+      "device": "cpu",
+      "batch_size": 64,
+      "mean_latency_ms": 7.36214000498876,
+      "std_latency_ms": 0.2203757309128786,
+      "min_latency_ms": 6.834500003606081,
+      "max_latency_ms": 7.7102999784983695,
+      "throughput_img_per_sec": 8693.124547567973
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "cnn",
+      "device": "cpu",
+      "batch_size": 128,
+      "mean_latency_ms": 15.200229996116832,
+      "std_latency_ms": 0.4217121664859838,
+      "min_latency_ms": 14.662600005976856,
+      "max_latency_ms": 16.358699998818338,
+      "throughput_img_per_sec": 8420.925211835602
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "cnn",
+      "device": "cpu",
+      "batch_size": 256,
+      "mean_latency_ms": 31.120484994607978,
+      "std_latency_ms": 0.44557434948261676,
+      "min_latency_ms": 30.675399990286678,
+      "max_latency_ms": 32.33720001298934,
+      "throughput_img_per_sec": 8226.092878833839
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "mlp",
+      "device": "cpu",
+      "batch_size": 1,
+      "mean_latency_ms": 0.18094500119332224,
+      "std_latency_ms": 0.018406563892132893,
+      "min_latency_ms": 0.16589998267591,
+      "max_latency_ms": 0.22840005112811923,
+      "throughput_img_per_sec": 5526.541177733872
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "mlp",
+      "device": "cpu",
+      "batch_size": 8,
+      "mean_latency_ms": 0.29294000123627484,
+      "std_latency_ms": 0.013829578870993956,
+      "min_latency_ms": 0.271800032351166,
+      "max_latency_ms": 0.32649998320266604,
+      "throughput_img_per_sec": 27309.34650863024
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "mlp",
+      "device": "cpu",
+      "batch_size": 32,
+      "mean_latency_ms": 0.4861399997025728,
+      "std_latency_ms": 0.06124140764295804,
+      "min_latency_ms": 0.4120999947190285,
+      "max_latency_ms": 0.6991000263951719,
+      "throughput_img_per_sec": 65824.65960336126
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "mlp",
+      "device": "cpu",
+      "batch_size": 64,
+      "mean_latency_ms": 0.9674650034867227,
+      "std_latency_ms": 0.06971217188912782,
+      "min_latency_ms": 0.8564000017940998,
+      "max_latency_ms": 1.125000009778887,
+      "throughput_img_per_sec": 66152.26366777651
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "mlp",
+      "device": "cpu",
+      "batch_size": 128,
+      "mean_latency_ms": 1.772889998392202,
+      "std_latency_ms": 0.1545942261529963,
+      "min_latency_ms": 1.4689999516122043,
+      "max_latency_ms": 2.196999965235591,
+      "throughput_img_per_sec": 72198.50081848315
+    },
+    {
+      "framework": "pytorch",
+      "model_type": "mlp",
+      "device": "cpu",
+      "batch_size": 256,
+      "mean_latency_ms": 2.8699950082227588,
+      "std_latency_ms": 0.04399303558799512,
+      "min_latency_ms": 2.8099000337533653,
+      "max_latency_ms": 2.9874000465497375,
+      "throughput_img_per_sec": 89198.7614147551
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "cnn",
+      "device": "CPU",
+      "batch_size": 1,
+      "mean_latency_ms": 12.365254992619157,
+      "std_latency_ms": 2.95131407668027,
+      "min_latency_ms": 7.271600014064461,
+      "max_latency_ms": 20.427400013431907,
+      "throughput_img_per_sec": 80.87176532929583
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "cnn",
+      "device": "CPU",
+      "batch_size": 8,
+      "mean_latency_ms": 25.097669998649508,
+      "std_latency_ms": 3.593980246412162,
+      "min_latency_ms": 19.001999986357987,
+      "max_latency_ms": 30.56280000600964,
+      "throughput_img_per_sec": 318.75468919746237
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "cnn",
+      "device": "CPU",
+      "batch_size": 32,
+      "mean_latency_ms": 43.925980004132725,
+      "std_latency_ms": 4.767147247276795,
+      "min_latency_ms": 33.686500042676926,
+      "max_latency_ms": 51.41559999901801,
+      "throughput_img_per_sec": 728.4982599588972
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "cnn",
+      "device": "CPU",
+      "batch_size": 64,
+      "mean_latency_ms": 50.634329981403425,
+      "std_latency_ms": 3.909751390602615,
+      "min_latency_ms": 41.81999998399988,
+      "max_latency_ms": 56.242400023620576,
+      "throughput_img_per_sec": 1263.9645873364063
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "cnn",
+      "device": "CPU",
+      "batch_size": 128,
+      "mean_latency_ms": 58.07784000062384,
+      "std_latency_ms": 3.4825336076991444,
+      "min_latency_ms": 52.04759998014197,
+      "max_latency_ms": 64.29769995156676,
+      "throughput_img_per_sec": 2203.938713950538
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "cnn",
+      "device": "CPU",
+      "batch_size": 256,
+      "mean_latency_ms": 75.56672000500839,
+      "std_latency_ms": 3.212437930856212,
+      "min_latency_ms": 66.80999998934567,
+      "max_latency_ms": 80.68459999049082,
+      "throughput_img_per_sec": 3387.734706270603
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "mlp",
+      "device": "CPU",
+      "batch_size": 1,
+      "mean_latency_ms": 10.826259999885224,
+      "std_latency_ms": 2.4977165632746385,
+      "min_latency_ms": 5.308799969498068,
+      "max_latency_ms": 14.704399975016713,
+      "throughput_img_per_sec": 92.36800150842504
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "mlp",
+      "device": "CPU",
+      "batch_size": 8,
+      "mean_latency_ms": 10.993074992438778,
+      "std_latency_ms": 2.5956911765027626,
+      "min_latency_ms": 6.887399998959154,
+      "max_latency_ms": 15.44559997273609,
+      "throughput_img_per_sec": 727.7308674326823
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "mlp",
+      "device": "CPU",
+      "batch_size": 32,
+      "mean_latency_ms": 18.27879999182187,
+      "std_latency_ms": 1.4270072367398468,
+      "min_latency_ms": 14.408099988941103,
+      "max_latency_ms": 20.171500043943524,
+      "throughput_img_per_sec": 1750.6619698403144
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "mlp",
+      "device": "CPU",
+      "batch_size": 64,
+      "mean_latency_ms": 16.055469994898885,
+      "std_latency_ms": 2.7771601825947356,
+      "min_latency_ms": 12.236399983521551,
+      "max_latency_ms": 20.47889999812469,
+      "throughput_img_per_sec": 3986.18041205483
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "mlp",
+      "device": "CPU",
+      "batch_size": 128,
+      "mean_latency_ms": 15.600304995314218,
+      "std_latency_ms": 1.7997831476049582,
+      "min_latency_ms": 11.62760000443086,
+      "max_latency_ms": 18.98250001249835,
+      "throughput_img_per_sec": 8204.967789953253
+    },
+    {
+      "framework": "tensorflow",
+      "model_type": "mlp",
+      "device": "CPU",
+      "batch_size": 256,
+      "mean_latency_ms": 20.255309998174198,
+      "std_latency_ms": 3.543433921274594,
+      "min_latency_ms": 13.51949997479096,
+      "max_latency_ms": 26.210599986370653,
+      "throughput_img_per_sec": 12638.66117196309
+    }
+  ]
+}

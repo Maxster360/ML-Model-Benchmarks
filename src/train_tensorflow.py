@@ -129,6 +129,7 @@ def train_tensorflow_model(
     batch_size=64,
     learning_rate=0.001,
     save_dir="./results",
+    subset_fraction=1.0,
 ):
     """End-to-end TensorFlow training pipeline with profiling.
 
@@ -161,7 +162,9 @@ def train_tensorflow_model(
     print(f"  Learning Rate: {learning_rate}")
 
     # --- Data ---
-    train_ds, test_ds, class_names = load_cifar10_tensorflow(batch_size=batch_size)
+    train_ds, test_ds, class_names = load_cifar10_tensorflow(
+        batch_size=batch_size, subset_fraction=subset_fraction
+    )
 
     # --- Model ---
     model = build_tensorflow_model(model_type=model_type)

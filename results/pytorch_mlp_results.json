@@ -1,0 +1,37 @@
+{
+  "framework": "pytorch",
+  "model_type": "mlp",
+  "device": "cpu",
+  "device_info": {
+    "cpu_name": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_cores": 20,
+    "ram_gb": 23.71,
+    "gpu_available": false,
+    "gpu_name": null,
+    "gpu_memory_gb": null
+  },
+  "num_parameters": 1740682,
+  "epochs": 3,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "training_time_ms": 43949.91560006747,
+  "eval_time_ms": 13765.467900026124,
+  "history": {
+    "train_loss": [
+      2.125946406173706,
+      2.01256224899292,
+      1.9366021083831788
+    ],
+    "train_accuracy": [
+      0.2158,
+      0.2572,
+      0.2902
+    ]
+  },
+  "test_metrics": {
+    "loss": 1.8425145664215088,
+    "accuracy": 0.327,
+    "f1_score": 0.32006387474219355,
+    "auc_roc": 0.7943399691013309
+  }
+}

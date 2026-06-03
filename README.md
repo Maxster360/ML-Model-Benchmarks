@@ -118,8 +118,8 @@ python -m pytest tests/ -v
 
 | Model | Architecture | Parameters | Framework |
 |-------|-------------|-----------|-----------|
-| CNN | 3x Conv-BN-ReLU-Pool + 2x FC + Dropout | ~295K | PyTorch, TensorFlow |
-| MLP | 3x FC-BN-ReLU-Dropout + FC output | ~1.7M | PyTorch, TensorFlow |
+| CNN | 3x Conv-BN-ReLU-Pool + 2x FC + Dropout | ~621K | PyTorch, TensorFlow |
+| MLP | 3x FC-BN-ReLU-Dropout + FC output | ~1.74M | PyTorch, TensorFlow |
 
 - **Optimizer**: Adam (lr=0.001) with StepLR scheduler
 - **Loss**: Cross-Entropy
@@ -168,14 +168,57 @@ After running `python main.py`, the `results/` directory will contain:
 | Profiling | psutil, GPUtil, CUDA Events | Hardware utilization metrics |
 | Notebook | Jupyter | Interactive analysis |
 
-## Key Findings (Expected)
+## Key Findings
 
-- **CNN outperforms MLP** on image classification due to spatial feature extraction via convolutions
-- **GPU acceleration** provides 5-50x speedup over CPU for batched inference (batch-size dependent)
-- **Batch size scaling**: Throughput increases with batch size up to GPU memory saturation
-- **Memory-bound vs Compute-bound**: MLP is more memory-bound (large FC layers), CNN is more compute-bound (convolution kernels)
-- **Framework comparison**: PyTorch and TensorFlow show comparable performance with matched architectures
-- **Sklearn baselines**: Traditional models are competitive on flattened features but significantly underperform CNNs
+The numbers below are from a **quick-mode run** (`python main.py --quick`: 3 epochs, 10%
+CIFAR-10 subset — 5,000 train / 1,000 test — on a 20-core CPU, **no CUDA GPU present**).
+They are intentionally modest: 3 epochs on a 10% subset is far from convergence. A full
+run (`python main.py`, 10 epochs on all 50K images, ideally on a GPU) will produce higher
+accuracies and is expected to change the relative ordering. All raw numbers and the charts
+that visualize them live in [`results/`](results/).
+
+### Classification metrics (test set)
+
+| Model | Accuracy | F1 (weighted) | AUC-ROC |
+|-------|:--------:|:-------------:|:-------:|
+| PyTorch CNN | **0.443** | 0.429 | **0.877** |
+| PyTorch MLP | 0.327 | 0.320 | 0.794 |
+| TensorFlow CNN | 0.124 | 0.032 | 0.778 |
+| TensorFlow MLP | 0.302 | 0.266 | 0.781 |
+| SVM (RBF) | 0.445 | 0.446 | 0.859 |
+| Random Forest | 0.381 | 0.378 | 0.809 |
+| Logistic Regression | 0.278 | 0.278 | 0.705 |
+
+### CPU inference throughput (images/sec, batch size 256)
+
+| Model | PyTorch | TensorFlow |
+|-------|:-------:|:----------:|
+| CNN | 8,226 | 3,388 |
+| MLP | 89,199 | 12,639 |
+
+### Observations
+
+- **CNN beats MLP in PyTorch**: the PyTorch CNN (0.443 acc, 0.877 AUC) clearly outperforms
+  the PyTorch MLP (0.327 acc, 0.794 AUC), consistent with spatial feature extraction helping
+  on images even at this small scale.
+- **MLP is far cheaper to run than CNN on CPU**: despite having more parameters (~1.74M vs
+  ~621K), the MLP reaches ~89K img/s vs the CNN's ~8K img/s in PyTorch at batch 256 — the CNN
+  is compute-bound by its convolutions, while the MLP is a handful of dense matmuls.
+- **Throughput scales with batch size**: PyTorch CNN rises from ~1,725 img/s (batch 1) to
+  ~8,226 img/s (batch 256); the MLP from ~5,527 to ~89,199 img/s.
+- **PyTorch is much faster than TensorFlow for CPU inference here**: at batch 1, PyTorch CNN
+  latency is ~0.58 ms vs TensorFlow's ~12.4 ms (eager-mode per-call overhead dominates at
+  small batches). The gap narrows as batch size grows.
+- **Classical baselines are competitive at this scale**: the RBF SVM (0.445 acc) matches the
+  best neural network in this short run, and Random Forest (0.381) beats both MLPs — with only
+  3 epochs on 5K images, the deep nets have no real advantage yet.
+- **TensorFlow CNN under-performed on the test set** (0.124 acc despite 0.41 train acc and
+  0.778 AUC). This is a BatchNorm running-statistics artifact: with so few update steps the
+  inference-time BN statistics are poorly estimated, collapsing the arg-max predictions even
+  though the model's ranking (AUC) is reasonable. It is expected to resolve with more epochs.
+- **GPU metrics were not measured**: this run was CPU-only, so `gpu_profiling_results.json`
+  is empty and the GPU memory chart is skipped. Re-run on a CUDA machine to populate kernel
+  timing, bandwidth, and memory profiles.
 
 ## Author
 

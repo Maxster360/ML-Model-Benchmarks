@@ -50,7 +50,6 @@ BASELINE_MODELS = {
         "model": lambda: LogisticRegression(
             max_iter=1000,
             solver="saga",
-            multi_class="multinomial",
             n_jobs=-1,
             random_state=42,
         ),

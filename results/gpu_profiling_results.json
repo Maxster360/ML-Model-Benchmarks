@@ -1,0 +1,13 @@
+{
+  "device_info": {
+    "cpu_name": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_cores": 20,
+    "ram_gb": 23.71,
+    "gpu_available": false,
+    "gpu_name": null,
+    "gpu_memory_gb": null
+  },
+  "memory_profiles": [],
+  "kernel_timing": [],
+  "bandwidth_estimates": []
+}

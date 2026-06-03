@@ -1,0 +1,41 @@
+[
+  {
+    "model_name": "Logistic Regression",
+    "model_key": "logistic_regression",
+    "metrics": {
+      "accuracy": 0.278,
+      "f1_score": 0.2782792172624206,
+      "auc_roc": 0.7053711111111112
+    },
+    "training_time_ms": 509428.73339995276,
+    "inference_time_ms": 3.1693000346422195,
+    "num_train_samples": 5000,
+    "num_test_samples": 1000
+  },
+  {
+    "model_name": "Random Forest",
+    "model_key": "random_forest",
+    "metrics": {
+      "accuracy": 0.381,
+      "f1_score": 0.37803813311519446,
+      "auc_roc": 0.8091638888888889
+    },
+    "training_time_ms": 1171.6779000125825,
+    "inference_time_ms": 30.294900003354996,
+    "num_train_samples": 5000,
+    "num_test_samples": 1000
+  },
+  {
+    "model_name": "Support Vector Machine",
+    "model_key": "svm",
+    "metrics": {
+      "accuracy": 0.445,
+      "f1_score": 0.44592787523962607,
+      "auc_roc": 0.8593488888888888
+    },
+    "training_time_ms": 255711.99370000977,
+    "inference_time_ms": 13725.548800022807,
+    "num_train_samples": 5000,
+    "num_test_samples": 1000
+  }
+]

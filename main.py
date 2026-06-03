@@ -104,25 +104,25 @@ def main():
         train_pytorch_model(
             model_type="cnn", epochs=args.epochs,
             batch_size=args.batch_size, learning_rate=args.lr,
-            save_dir=args.results_dir,
+            save_dir=args.results_dir, subset_fraction=subset_fraction,
         )
         # PyTorch MLP
         train_pytorch_model(
             model_type="mlp", epochs=args.epochs,
             batch_size=args.batch_size, learning_rate=args.lr,
-            save_dir=args.results_dir,
+            save_dir=args.results_dir, subset_fraction=subset_fraction,
         )
         # TensorFlow CNN
         train_tensorflow_model(
             model_type="cnn", epochs=args.epochs,
             batch_size=args.batch_size, learning_rate=args.lr,
-            save_dir=args.results_dir,
+            save_dir=args.results_dir, subset_fraction=subset_fraction,
         )
         # TensorFlow MLP
         train_tensorflow_model(
             model_type="mlp", epochs=args.epochs,
             batch_size=args.batch_size, learning_rate=args.lr,
-            save_dir=args.results_dir,
+            save_dir=args.results_dir, subset_fraction=subset_fraction,
         )
 
     # ------------------------------------------------------------------
