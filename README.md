@@ -37,7 +37,8 @@ ML-Model-Benchmarks/
 │       ├── pytorch_models.py    # PyTorch CNN (3-block) and MLP (3-layer)
 │       └── tensorflow_models.py # TensorFlow/Keras CNN and MLP (matched arch)
 ├── notebooks/
-│   └── benchmark_analysis.ipynb # Interactive analysis and exploration
+│   ├── benchmark_analysis.ipynb # Interactive analysis and exploration
+│   └── run_on_gpu_colab.ipynb   # One-click GPU run on Google Colab
 ├── tests/
 │   └── test_models.py           # Unit tests for model architectures
 ├── data/                        # Dataset cache (auto-downloaded)
@@ -77,6 +78,21 @@ python main.py --skip-training
 # Custom configuration
 python main.py --epochs 20 --batch-size 128 --lr 0.0005
 ```
+
+### Running on a GPU (Colab)
+
+This machine doesn't need a GPU to run, but the GPU profiling and CPU-vs-GPU
+inference comparison only produce numbers when a CUDA device is present. The
+quickest way to get those is the bundled Colab notebook
+[`notebooks/run_on_gpu_colab.ipynb`](notebooks/run_on_gpu_colab.ipynb):
+
+1. Open it in [Google Colab](https://colab.research.google.com/github/Maxster360/ML-Model-Benchmarks/blob/main/notebooks/run_on_gpu_colab.ipynb).
+2. **Runtime → Change runtime type → GPU**, then **Runtime → Run all**.
+
+It clones the repo, installs only the deps Colab is missing (Colab already ships
+CUDA-enabled torch/TensorFlow), runs the inference benchmarks + GPU profiler, and
+prints the **CPU-vs-GPU inference speedup at batch 128**. The optional full-pipeline
+cell trains all four models on the GPU and regenerates every result file.
 
 ### Running Individual Components
 
@@ -183,8 +199,8 @@ that visualize them live in [`results/`](results/).
 |-------|:--------:|:-------------:|:-------:|
 | PyTorch CNN | **0.443** | 0.429 | **0.877** |
 | PyTorch MLP | 0.327 | 0.320 | 0.794 |
-| TensorFlow CNN | 0.124 | 0.032 | 0.778 |
-| TensorFlow MLP | 0.302 | 0.266 | 0.781 |
+| TensorFlow CNN | 0.125 | 0.034 | 0.756 |
+| TensorFlow MLP | 0.304 | 0.296 | 0.795 |
 | SVM (RBF) | 0.445 | 0.446 | 0.859 |
 | Random Forest | 0.381 | 0.378 | 0.809 |
 | Logistic Regression | 0.278 | 0.278 | 0.705 |
@@ -193,8 +209,8 @@ that visualize them live in [`results/`](results/).
 
 | Model | PyTorch | TensorFlow |
 |-------|:-------:|:----------:|
-| CNN | 8,226 | 3,388 |
-| MLP | 89,199 | 12,639 |
+| CNN | 8,172 | 3,276 |
+| MLP | 88,261 | 12,742 |
 
 ### Observations
 
@@ -202,23 +218,23 @@ that visualize them live in [`results/`](results/).
   the PyTorch MLP (0.327 acc, 0.794 AUC), consistent with spatial feature extraction helping
   on images even at this small scale.
 - **MLP is far cheaper to run than CNN on CPU**: despite having more parameters (~1.74M vs
-  ~621K), the MLP reaches ~89K img/s vs the CNN's ~8K img/s in PyTorch at batch 256 — the CNN
+  ~621K), the MLP reaches ~88K img/s vs the CNN's ~8K img/s in PyTorch at batch 256 — the CNN
   is compute-bound by its convolutions, while the MLP is a handful of dense matmuls.
-- **Throughput scales with batch size**: PyTorch CNN rises from ~1,725 img/s (batch 1) to
-  ~8,226 img/s (batch 256); the MLP from ~5,527 to ~89,199 img/s.
+- **Throughput scales with batch size**: PyTorch CNN rises from ~961 img/s (batch 1) to
+  ~8,172 img/s (batch 256); the MLP from ~2,934 to ~88,261 img/s.
 - **PyTorch is much faster than TensorFlow for CPU inference here**: at batch 1, PyTorch CNN
-  latency is ~0.58 ms vs TensorFlow's ~12.4 ms (eager-mode per-call overhead dominates at
+  latency is ~1.0 ms vs TensorFlow's ~12.4 ms (eager-mode per-call overhead dominates at
   small batches). The gap narrows as batch size grows.
 - **Classical baselines are competitive at this scale**: the RBF SVM (0.445 acc) matches the
   best neural network in this short run, and Random Forest (0.381) beats both MLPs — with only
   3 epochs on 5K images, the deep nets have no real advantage yet.
-- **TensorFlow CNN under-performed on the test set** (0.124 acc despite 0.41 train acc and
-  0.778 AUC). This is a BatchNorm running-statistics artifact: with so few update steps the
+- **TensorFlow CNN under-performed on the test set** (0.125 acc despite ~0.41 train acc and
+  0.756 AUC). This is a BatchNorm running-statistics artifact: with so few update steps the
   inference-time BN statistics are poorly estimated, collapsing the arg-max predictions even
   though the model's ranking (AUC) is reasonable. It is expected to resolve with more epochs.
 - **GPU metrics were not measured**: this run was CPU-only, so `gpu_profiling_results.json`
   is empty and the GPU memory chart is skipped. Re-run on a CUDA machine to populate kernel
-  timing, bandwidth, and memory profiles.
+  timing, bandwidth, and memory profiles — see [Running on a GPU](#running-on-a-gpu-colab).
 
 ## Author
 

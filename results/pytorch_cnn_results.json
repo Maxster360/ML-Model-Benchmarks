@@ -14,8 +14,8 @@
   "epochs": 3,
   "batch_size": 64,
   "learning_rate": 0.001,
-  "training_time_ms": 47100.7197999279,
-  "eval_time_ms": 13696.64300000295,
+  "training_time_ms": 60145.86470002541,
+  "eval_time_ms": 16451.612999953795,
   "history": {
     "train_loss": [
       1.950099853515625,
